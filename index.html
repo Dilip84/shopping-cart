@@ -84,7 +84,7 @@
       //mobile-plus
       var plusBtn = document.getElementById("mobile-plus-button");
       plusBtn.addEventListener("click", function () {
-         var mobileItemPrice = itemPrice("phone-items", 1219);
+         var mobileItemPrice = itemPrice("phone-items", 1200);
          amount("phone-price", "sum-mobile", mobileItemPrice);
          var allTotal = total("sum-mobile", "sum-case",);
          document.getElementById("total").innerText = allTotal;
@@ -102,7 +102,7 @@
       //mobile-minus
       var minusBtn = document.getElementById("mobile-minus-button");
       minusBtn.addEventListener("click", function () {
-         minusItem("phone-items", "phone-price", "sum-mobile", 1219)
+         minusItem("phone-items", "phone-price", "sum-mobile", 1200)
          var allTotal = total("sum-mobile", "sum-case",);
          document.getElementById("total").innerText = allTotal;
       })
