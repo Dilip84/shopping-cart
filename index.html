@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
    <section>
       <div class="container">
          <div class="cart">
@@ -25,12 +24,13 @@
 
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="mobile-minus-button" class="btn btn-default"><i
+                                 class="fas fa-minus"></i></button>
+                           <input id="phone-items" type="text" class="form-control text-center" value="1">
+                           <button id="mobile-plus-button" class="btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
-                        <h5>$1219</h5>
-                        <img src="images/remove.png" alt="" class="remove-item">
+                        <h5>$ <span id="phone-price">0</span></h5>
+                        <img id="currentOrderMobilePrice" src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
                </div>
@@ -43,12 +43,12 @@
                      </div>
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="case-minus-button" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="case-items" type="text" class="form-control text-center" value="1">
+                           <button id="case-plus-button" class="btn btn-default"><i class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5>$59</h5>
+                        <h5>$ <span id="case-price">0</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -56,17 +56,18 @@
 
                <div class="cart-item">
                   <div class="row">
-
                      <div class="col-md-8">
-                        <h5>Subtotal: </h5>
+                        <h5>Mobile: </h5>
+                        <h5>Case:</h5>
                         <h5>Tax:</h5>
                         <h5>Total:</h5>
                      </div>
 
                      <div class="col-md-4 status">
-                        <h5>$1,278</h5>
-                        <h5>$0</h5>
-                        <h5>$1,278</h5>
+                        <h5>$ <span id="sum-mobile">0</span></h5>
+                        <h5> $ <span id="sum-case">0</span></h5>
+                        <h5> $0</h5>
+                        <h5> $ <span id="total">0</span></h5>
                      </div>
                   </div>
                </div>
@@ -77,6 +78,93 @@
          </div>
       </div>
    </section>
+
+   <script>
+
+      //mobile-plus
+      var plusBtn = document.getElementById("mobile-plus-button");
+      plusBtn.addEventListener("click", function () {
+         var mobileItemPrice = itemPrice("phone-items", 1219);
+         amount("phone-price", "sum-mobile", mobileItemPrice);
+         var allTotal = total("sum-mobile", "sum-case",);
+         document.getElementById("total").innerText = allTotal;
+      })
+
+      //case-plus
+      var casePlusBtn = document.getElementById("case-plus-button");
+      casePlusBtn.addEventListener("click", function () {
+         var caseItemPrice = itemPrice("case-items", 59);
+         amount("case-price", "sum-case", caseItemPrice);
+         var allTotal = total("sum-mobile", "sum-case",);
+         document.getElementById("total").innerText = allTotal;
+      })
+
+      //mobile-minus
+      var minusBtn = document.getElementById("mobile-minus-button");
+      minusBtn.addEventListener("click", function () {
+         minusItem("phone-items", "phone-price", "sum-mobile", 1219)
+         var allTotal = total("sum-mobile", "sum-case",);
+         document.getElementById("total").innerText = allTotal;
+      })
+
+      //case-minus
+      var minusBtn = document.getElementById("case-minus-button");
+      minusBtn.addEventListener("click", function () {
+         minusItem("case-items", "case-price", "sum-case", 59)
+         var allTotal = total("sum-mobile", "sum-case",);
+         document.getElementById("total").innerText = allTotal;
+      })
+
+
+      function minusItem(id1, id2, id3, price) {
+         var itemValueMinus = document.getElementById(id1).value;
+         var itemNumberMinus = parseFloat(itemValueMinus);
+         itemNumberMinus--;
+         document.getElementById(id1).value = itemNumberMinus;
+
+         var abcd = totalItemPrice(id2, price);
+         document.getElementById(id2).innerText = abcd;
+
+         var abc = totalItemPrice(id3, price);
+         document.getElementById(id3).innerText = abc;
+
+         if (itemNumberMinus <= -1) {
+            document.getElementById(id1).value = 0;
+            document.getElementById(id2).innerText = 0;
+            document.getElementById(id3).innerText = 0;
+         }
+      }
+      function totalItemPrice(id, price) {
+         var totalPrice = document.getElementById(id).innerText;
+         totalPrice = parseFloat(totalPrice);
+         var tk = totalPrice - price;
+         return tk;
+      }
+      function itemPrice(inputValue, price) {
+         var itemValue = document.getElementById(inputValue).value;
+         var itemNumber = parseFloat(itemValue);
+         itemNumber++;
+         document.getElementById(inputValue).value = itemNumber;
+         var totalPrice = itemNumber * price;
+         return totalPrice;
+      }
+      function amount(id1, id2, amount) {
+         document.getElementById(id1).innerText = amount;
+         document.getElementById(id2).innerText = amount;
+      }
+
+
+
+      function total(id1, id2) {
+         var mobileTotalPrice = document.getElementById(id1).innerText;
+         mobileTotalPrice = parseFloat(mobileTotalPrice);
+         var caseTotalPrice = document.getElementById(id2).innerText;
+         caseTotalPrice = parseFloat(caseTotalPrice);
+         var total = mobileTotalPrice + caseTotalPrice;
+         return total;
+      }
+
+   </script>
 </body>
 
 </html>
